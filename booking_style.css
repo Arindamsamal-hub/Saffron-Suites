@@ -1,0 +1,63 @@
+/* Global Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+body { background: #f4f7f6; color: #333; }
+
+header { 
+    background: #fff; padding: 15px 50px; display: flex; 
+    justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd;
+}
+
+.logo { color: #e74c3c; font-size: 28px; font-weight: bold; text-decoration: none; }
+
+.back-link { 
+    text-decoration: none; color: #555; font-weight: 600; 
+    padding: 8px 15px; border-radius: 20px; transition: 0.3s;
+}
+.back-link:hover { background: #eee; }
+
+.booking-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; min-height: 80vh; }
+
+.booking-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; }
+
+/* Form Styling */
+.form-section, .summary-card { 
+    background: #fff; padding: 30px; border-radius: 15px; 
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+}
+
+h2 { margin-bottom: 25px; color: #2c3e50; }
+
+.input-group { margin-bottom: 20px; }
+
+label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+
+input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; }
+
+.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.confirm-btn { 
+    width: 100%; padding: 18px; background: #27ae60; color: #fff; 
+    border: none; border-radius: 10px; font-size: 20px; font-weight: bold; 
+    cursor: pointer; transition: 0.3s; margin-top: 10px;
+}
+.confirm-btn:hover { background: #219150; transform: translateY(-2px); }
+
+/* Summary Card Styling */
+.summary-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; }
+
+.summary-details h3 { font-size: 22px; margin-bottom: 5px; color: #2c3e50; }
+
+.price-breakdown p { display: flex; justify-content: space-between; margin: 12px 0; color: #666; font-weight: 500; }
+
+hr { border: 0; border-top: 1px solid #eee; margin: 15px 0; }
+
+.grand-total { color: #e74c3c; font-size: 24px; display: flex; justify-content: space-between; margin-top: 15px; }
+
+footer { text-align: center; padding: 40px; background-color: #2c3e50; color: white; margin-top: 40px; }
+
+/* Responsive adjustments */
+@media (max-width: 850px) {
+    .booking-grid { grid-template-columns: 1fr; }
+    .summary-section { order: -1; }
+}

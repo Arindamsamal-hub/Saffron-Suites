@@ -1,0 +1,283 @@
+/* =========================================
+   GLOBAL RESET
+   ========================================= */
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* =========================================
+   HEADER
+   ========================================= */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px; /* Increased padding */
+    background: white;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    color: #e74c3c;
+    font-size: 32px; /* Increased size */
+    font-weight: bold;
+}
+
+.back-link {
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    font-size: 18px; /* Increased size */
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: background 0.3s;
+}
+
+.back-link:hover {
+    background: #eee;
+}
+
+.details-wrapper {
+    /* CHANGED: Increased max-width from 1200px to 1400px */
+    max-width: 1400px;
+    margin: 50px auto;
+    background: #fff;
+    /* CHANGED: Increased padding */
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    display: flex;
+    gap: 60px; /* Increased gap between image and text */
+}
+
+.gallery-section {
+    flex: 1.3; /* Gives image slightly more width than text */
+    min-width: 0; 
+}
+
+.main-image-box {
+    width: 100%;
+    /* CHANGED: Increased height from 400px to 550px */
+    height: 550px; 
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.main-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.main-image-box:hover img {
+    transform: scale(1.05);
+}
+
+.thumbnail-row {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.thumbnail {
+    /* CHANGED: Increased thumbnail size */
+    width: 110px;
+    height: 85px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: 0.3s;
+    border: 3px solid transparent;
+}
+
+.thumbnail:hover, .thumbnail.active-thumb {
+    opacity: 1;
+    border-color: #e74c3c;
+    transform: translateY(-3px);
+}
+
+.info-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-header h1 {
+    /* CHANGED: Much larger title */
+    font-size: 42px; 
+    color: #2c3e50;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.location-text {
+    color: #7f8c8d;
+    font-size: 18px; /* Increased size */
+    margin-bottom: 25px;
+}
+
+.price-rating-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 25px; /* Increased padding */
+    border-radius: 15px;
+    margin-bottom: 30px;
+    border: 1px solid #eee;
+}
+
+.price-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.price-label {
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.price-value {
+    /* CHANGED: Large, bold price */
+    font-size: 36px;
+    font-weight: 800;
+    color: #27ae60;
+}
+
+.rating-box {
+    text-align: right;
+}
+
+.rating-badge {
+    background: #e67e22;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 20px; /* Larger badge */
+}
+
+.rating-text {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #666;
+    font-weight: bold;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #eee;
+    margin-bottom: 30px;
+}
+
+.description-box h3, .amenities-box h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.description-box p {
+    /* CHANGED: Larger body text for readability */
+    font-size: 18px; 
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 35px;
+}
+
+.amenities-grid {
+    display: grid;
+    /* CHANGED: Wider columns */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; /* Increased gap */
+    margin-bottom: 40px;
+}
+
+.amenities-grid span {
+    color: #444;
+    font-size: 17px; /* Larger text */
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.amenities-grid i {
+    color: #e74c3c;
+    width: 30px;
+    font-size: 18px;
+}
+
+.book-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    /* CHANGED: Big, chunky button */
+    padding: 22px; 
+    font-size: 22px;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.book-btn:hover {
+    background: #c0392b;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+}
+
+footer {
+    background-color: #222;
+    color: #fff;
+    padding: 40px;
+    margin-top: auto;
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .details-wrapper {
+        flex-direction: column;
+        padding: 30px;
+        margin: 20px;
+    }
+    
+    .gallery-section {
+        flex: auto;
+    }
+
+    .main-image-box {
+        height: 350px;
+    }
+
+    .info-header h1 {
+        font-size: 32px;
+    }
+}

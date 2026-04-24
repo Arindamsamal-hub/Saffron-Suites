@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Details - Saffron Suites</title>
+    <link rel="stylesheet" href="D_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">Saffron Suites</div>
+    <a href="index.html" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+</header>
+
+<div class="details-wrapper">
+    
+    <div class="gallery-section">
+        <div class="main-image-box">
+            <img id="current-img" src="" alt="Hotel Main View">
+        </div>
+        <div class="thumbnail-row" id="thumbnail-container">
+            </div>
+    </div>
+
+    <div class="info-section">
+        <div class="info-header">
+            <h1 id="hotel-title">Hotel Name</h1>
+            <p class="location-text"><i class="fas fa-map-marker-alt"></i> <span id="hotel-loc">Location</span></p>
+        </div>
+
+        <div class="price-rating-box">
+            <div class="price-box">
+                <span class="price-label">Price per night</span>
+                <span class="price-value" id="hotel-price">₹0</span>
+            </div>
+            <div class="rating-box">
+                <span class="rating-badge" id="hotel-rating">4.5</span>
+                <span class="rating-text">Excellent</span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="description-box">
+            <h3>About this Stay</h3>
+            <p id="hotel-desc">
+                Loading description...
+            </p>
+        </div>
+
+        <div class="amenities-box">
+            <h3>Popular Amenities</h3>
+            <div class="amenities-grid">
+                <span><i class="fas fa-wifi"></i> Free Wifi</span>
+                <span><i class="fas fa-swimming-pool"></i> Pool</span>
+                <span><i class="fas fa-utensils"></i> Restaurant</span>
+                <span><i class="fas fa-spa"></i> Spa & Wellness</span>
+                <span><i class="fas fa-parking"></i> Free Parking</span>
+                <span><i class="fas fa-cocktail"></i> Bar</span>
+            </div>
+        </div>
+
+        <button class="book-btn" id="book-now-btn">Book Now</button>
+    </div>
+
+</div>
+
+<footer>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Saffron Suites. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const hotelTitle = params.get("title");
+
+        // Redirect back to home if someone tries to open Details.html directly without a hotel selected
+        if (!hotelTitle) {
+            window.location.href = 'index.html';
+            return;
+        }
+
+        // Icon mapping for amenities using FontAwesome classes
+        const iconMap = {
+            "Wifi": "fa-wifi", "Pool": "fa-swimming-pool", "Restaurant": "fa-utensils", 
+            "Spa": "fa-spa", "Parking": "fa-parking", "Bar": "fa-cocktail", 
+            "Beach Access": "fa-umbrella-beach", "Museum": "fa-landmark",
+            "Butler Service": "fa-user-tie", "Safari": "fa-binoculars",
+            "Nature Walk": "fa-tree", "Gym": "fa-dumbbell", "Yoga": "fa-om"
+        };
+
+       fetch(`https://saffronsuites.pythonanywhere.com/api/hotel/details?title=${encodeURIComponent(hotelTitle)}`)
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to connect to the backend server");
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    console.error("Database Error:", data.error);
+                    alert("Stay details not found in the database.");
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                // 1. Populate Text Information safely
+                const titleEl = document.getElementById("hotel-title");
+                const priceEl = document.getElementById("hotel-price");
+                const ratingEl = document.getElementById("hotel-rating");
+                const locEl = document.getElementById("hotel-loc");
+                const descEl = document.getElementById("hotel-desc");
+
+                if (titleEl) titleEl.innerText = data.title;
+                if (priceEl) priceEl.innerText = `₹${data.price.toLocaleString()}`;
+                if (ratingEl) ratingEl.innerText = data.rating;
+                if (locEl) locEl.innerText = data.location.toUpperCase();
+                if (descEl) descEl.innerText = data.description;
+
+                // 2. Populate Amenities Dynamically
+                const amenitiesContainer = document.querySelector(".amenities-grid");
+                if (amenitiesContainer && data.amenities && Array.isArray(data.amenities)) {
+                    amenitiesContainer.innerHTML = ""; 
+                    data.amenities.forEach(amenity => {
+                        const iconClass = iconMap[amenity] || "fa-check-circle";
+                        const span = document.createElement("span");
+                        span.innerHTML = `<i class="fas ${iconClass}"></i> ${amenity}`;
+                        amenitiesContainer.appendChild(span);
+                    });
+                }
+
+                // 3. Populate Image Gallery Dynamically
+                const currentImgEl = document.getElementById("current-img");
+                const thumbContainer = document.getElementById("thumbnail-container");
+                
+                // Combine the main display image with the rest of the gallery images
+                const fullGallery = [data.image_url].concat(data.gallery_images || []);
+                
+                if (currentImgEl && fullGallery.length > 0) {
+                    currentImgEl.src = fullGallery[0];
+                }
+
+                if (thumbContainer && fullGallery.length > 0) {
+                    thumbContainer.innerHTML = ""; // Clear out any placeholder thumbnails
+                    
+                    fullGallery.forEach((imgSrc, index) => {
+                        const thumb = document.createElement("img");
+                        thumb.src = imgSrc;
+                        thumb.classList.add("thumbnail");
+                        
+                        // Highlight the first thumbnail by default
+                        if (index === 0) thumb.classList.add("active-thumb");
+
+                        // Add click listener for the image gallery swap effect
+                        thumb.addEventListener("click", () => {
+                            if (currentImgEl) {
+                                currentImgEl.style.opacity = 0; // Fade out
+                                setTimeout(() => {
+                                    currentImgEl.src = imgSrc;
+                                    currentImgEl.style.opacity = 1; // Fade in
+                                }, 200);
+                            }
+                            
+                            // Update active thumbnail styling
+                            document.querySelectorAll(".thumbnail").forEach(t => t.classList.remove("active-thumb"));
+                            thumb.classList.add("active-thumb");
+                        });
+                        
+                        thumbContainer.appendChild(thumb);
+                    });
+                }
+
+                // 4. Redirection Logic to the Booking Page
+                const bookBtn = document.getElementById("book-now-btn");
+                if (bookBtn) {
+                    bookBtn.addEventListener("click", () => {
+                        const bookingParams = new URLSearchParams();
+                        
+                        // Package the exact database variables to send to booking.html
+                        bookingParams.append("title", data.title);
+                        bookingParams.append("price", data.price); // Sending raw number, e.g., 9800
+                        bookingParams.append("img", data.image_url);
+                        
+                        window.location.href = `booking.html?${bookingParams.toString()}`;
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Connection Error:", error);
+                alert("Could not load hotel details. Please ensure your Python Flask server (app.py) is running in the terminal.");
+            });
+    });
+</script>
+
+</body>
+</html>

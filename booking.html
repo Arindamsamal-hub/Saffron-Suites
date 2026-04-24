@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury that Feels Like Home - Saffron Suites</title>
+    <link rel="stylesheet" href="booking_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">Saffron Suites</a>
+    <a href="javascript:history.back()" class="back-link">
+        <i class="fas fa-arrow-left"></i> Edit Stay Details
+    </a>
+</header>
+
+<div class="booking-container">
+    <div class="booking-grid">
+        <div class="form-section">
+            <h2>Guest Information</h2>
+            <form id="booking-form">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Varun Verma" required>
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="varun@example.com" required>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Check-in Date</label>
+                        <input type="date" id="checkin" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Check-out Date</label>
+                        <input type="date" id="checkout" required>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Number of Rooms</label>
+                        <input type="number" id="rooms" value="1" min="1" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Number of Adults</label>
+                        <input type="number" id="adults" value="1" min="1" required>
+                        <small id="capacity-warning" style="color: #e74c3c; display: none; font-weight: bold; margin-top: 5px;">
+                            <i class="fas fa-exclamation-triangle"></i> Max 4 adults per room!
+                        </small>
+                    </div>
+                </div>
+
+                <button type="submit" class="confirm-btn">Confirm Booking</button>
+            </form>
+        </div>
+
+        <div class="summary-section">
+            <div class="summary-card">
+                <img id="summary-img" src="" alt="Stay Preview">
+                <div class="summary-details">
+                    <h3 id="summary-title">Stay Name</h3>
+                    <p id="summary-price-per-night">₹0 / night</p>
+                    <hr>
+                    <div class="price-breakdown">
+                        <p>Stay Duration: <span id="night-count">0</span> Nights</p>
+                        <p>Inventory: <span id="room-display">1</span> Room(s)</p>
+                        <p>Base Amount: <span id="base-price">₹0</span></p>
+                        <p>Service Fee (5%): <span id="service-fee">₹0</span></p>
+                        <hr>
+                        <h3 class="grand-total">Final Amount: <span id="final-amount">₹0</span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Saffron Suites. All rights reserved.</p>
+</footer>
+
+<script src="booking.js"></script>
+</body>
+</html>
